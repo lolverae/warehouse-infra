@@ -40,9 +40,9 @@ resource "azurerm_linux_virtual_machine" "ansible-node" {
     }
 
     source_image_reference {
-        publisher = "Canonical"
-        offer     = "UbuntuServer"
-        sku       = "18.04-LTS"
+        publisher = "OpenLogic"
+        offer     = "CentOS"
+        sku       = "7_8-gen2"
         version   = "latest"
     }
 
