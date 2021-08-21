@@ -1,12 +1,10 @@
 terraform {
-
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 2.65"
     }
   }
-
   required_version = ">= 0.14.9"
 }
 
@@ -19,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
   location = "westus2"
 }
 
-resource "azurerm_virtual_network" "vnet" {
+resource "azurerm_virtual_network" "warehouse-vnet" {
     name                = "myTFVnet"
     address_space       = ["10.0.0.0/16"]
     location            = "westus2"
@@ -30,8 +28,8 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_linux_virtual_machine" "ansible-node" {
     name                  = "ansible-node1"
     location              = "westus2"
-    resource_group_name   = azurerm_resource_group.warehouse-project.name
-    network_interface_ids = [azurerm_network_interface.myterraformnic.id]
+    resource_group_name   = azurerm_resource_group.rg.name
+    network_interface_ids = [azurerm_network_interface.warehouse-vnet.id]
     size                  = "Standard_DS1_v2"
 
     os_disk {
@@ -54,10 +52,6 @@ resource "azurerm_linux_virtual_machine" "ansible-node" {
     admin_ssh_key {
         username       = "ansadmin"
         public_key     = file("~/.ssh/id_rsa.pub")
-    }
-
-    boot_diagnostics {
-        storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
     }
 
     tags = {
