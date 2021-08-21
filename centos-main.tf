@@ -1,4 +1,5 @@
 terraform {
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -29,7 +30,7 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_linux_virtual_machine" "ansible-node" {
     name                  = "ansible-node1"
     location              = "westus2"
-    resource_group_name   = azurerm_resource_group.myterraformgroup.name
+    resource_group_name   = azurerm_resource_group.warehouse-project.name
     network_interface_ids = [azurerm_network_interface.myterraformnic.id]
     size                  = "Standard_DS1_v2"
 
