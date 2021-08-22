@@ -37,7 +37,7 @@ resource "azurerm_linux_virtual_machine" "warehouse-service" {
   name                = "warehouse-service-machine"
   resource_group_name = azurerm_resource_group.warehouse-service.name
   location            = azurerm_resource_group.warehouse-service.location
-  size                = "Standard_D1_v2"
+  size                = "Standard_A1_v2"
   admin_username      = "ansadmin"
   network_interface_ids = [
     azurerm_network_interface.warehouse-service.id,
@@ -56,7 +56,7 @@ resource "azurerm_linux_virtual_machine" "warehouse-service" {
   source_image_reference {
     publisher = "OpenLogic"
     offer     = "CentOS"
-    sku       = "7_8-gen2"
+    sku       = "8-lvm-gen2"
     version   = "latest"
   }
 }
