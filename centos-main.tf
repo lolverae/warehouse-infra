@@ -12,24 +12,35 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
+resource "azurerm_resource_group" "warehouse-rg" {
   name     = "warehouse-project"
   location = "westus2"
 }
 
-resource "azurerm_virtual_network" "vnet" {
-    name                = "myTFVnet"
+resource "azurerm_virtual_network" "warehouse-vnet" {
+    name                = "warehouse-net"
     address_space       = ["10.0.0.0/16"]
     location            = "westus2"
-    resource_group_name = azurerm_resource_group.rg.name
+    resource_group_name = azurerm_resource_group.warehouse-rg.name
+}
+resource "azurerm_network_interface" "warehouse-nic" {
+  name                = "warehouse-interface"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.warehouse-rg.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
 }
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "ansible-node" {
     name                  = "ansible-node1"
     location              = "westus2"
-    resource_group_name   = azurerm_resource_group.rg.name
-    network_interface_ids = [azurerm_network_interface.vnet.id]
+    resource_group_name   = azurerm_resource_group.warehouse-rg.name
+    network_interface_ids = [azurerm_network_interface.warehouse-vnet.id]
     size                  = "Standard_DS1_v2"
 
     os_disk {
