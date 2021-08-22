@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
   location = "westus2"
 }
 
-resource "azurerm_virtual_network" "warehouse-vnet" {
+resource "azurerm_virtual_network" "vnet" {
     name                = "myTFVnet"
     address_space       = ["10.0.0.0/16"]
     location            = "westus2"
@@ -29,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "ansible-node" {
     name                  = "ansible-node1"
     location              = "westus2"
     resource_group_name   = azurerm_resource_group.rg.name
-    network_interface_ids = [azurerm_network_interface.warehouse-vnet.id]
+    network_interface_ids = [azurerm_network_interface.vnet.id]
     size                  = "Standard_DS1_v2"
 
     os_disk {
