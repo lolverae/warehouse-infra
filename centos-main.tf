@@ -41,10 +41,64 @@ resource "azurerm_public_ip" "warehouse-service" {
 }
 
 resource "azurerm_linux_virtual_machine" "warehouse-service" {
-  name                = "warehouse-service-machine"
+  name                = "ansible-controller"
   resource_group_name = azurerm_resource_group.warehouse-service.name
   location            = azurerm_resource_group.warehouse-service.location
   size                = "Standard_A1_v2"
+  admin_username      = "ansadmin"
+  network_interface_ids = [
+    azurerm_network_interface.warehouse-service.id,
+  ]
+
+  admin_ssh_key {
+    username   = "ansadmin"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "8_2"
+    version   = "latest"
+  }
+}
+resource "azurerm_linux_virtual_machine" "warehouse-service" {
+  name                = "jenkins controller"
+  resource_group_name = azurerm_resource_group.warehouse-service.name
+  location            = azurerm_resource_group.warehouse-service.location
+  size                = "Standard_A1_v2"
+  admin_username      = "ansadmin"
+  network_interface_ids = [
+    azurerm_network_interface.warehouse-service.id,
+  ]
+
+  admin_ssh_key {
+    username   = "ansadmin"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "8_2"
+    version   = "latest"
+  }
+}
+resource "azurerm_linux_virtual_machine" "warehouse-service" {
+  name                = "kube cluster"
+  resource_group_name = azurerm_resource_group.warehouse-service.name
+  location            = azurerm_resource_group.warehouse-service.location
+  size                = "Standard_DS1_v2"
   admin_username      = "ansadmin"
   network_interface_ids = [
     azurerm_network_interface.warehouse-service.id,
