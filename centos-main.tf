@@ -57,6 +57,6 @@ resource "azurerm_linux_virtual_machine" "warehouse-service" {
     publisher = "OpenLogic"
     offer     = "CentOS"
     sku       = "8-lvm-gen2"
-    version   = "latest"
+    version   = "8.2.2020062401"
   }
 }
