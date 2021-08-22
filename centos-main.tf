@@ -4,7 +4,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "warehouse-service" {
   name     = "warehouse-service-resources"
-  location = "West Europe"
+  location = "westus2"
 }
 
 resource "azurerm_virtual_network" "warehouse-service" {
@@ -31,6 +31,13 @@ resource "azurerm_network_interface" "warehouse-service" {
     subnet_id                     = azurerm_subnet.warehouse-service.id
     private_ip_address_allocation = "Dynamic"
   }
+}
+
+resource "azurerm_public_ip" "warehouse-service" {
+    name                         = "warehouse IP"
+    location                     = "westus2"
+    resource_group_name          = azurerm_resource_group.warehouse-service.name
+    allocation_method            = "Static"
 }
 
 resource "azurerm_linux_virtual_machine" "warehouse-service" {
