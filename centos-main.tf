@@ -37,8 +37,8 @@ resource "azurerm_linux_virtual_machine" "warehouse-service" {
   name                = "warehouse-service-machine"
   resource_group_name = azurerm_resource_group.warehouse-service.name
   location            = azurerm_resource_group.warehouse-service.location
-  size                = "Standard_F2"
-  admin_username      = "adminuser"
+  size                = "7_8-gen2"
+  admin_username      = "ansadmin"
   network_interface_ids = [
     azurerm_network_interface.warehouse-service.id,
   ]
