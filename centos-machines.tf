@@ -1,7 +1,7 @@
 resource "azurerm_virtual_machine" "test" {
   name                  = "${var.vm_name}-vm-${count.index}"
-  location              = "${azurerm_resource_group.rg.location}"
-  resource_group_name   = "${azurerm_resource_group.rg.name}"
+  location              = "${azurerm_resource_group.warehouse-rg.location}"
+  resource_group_name   = "${azurerm_resource_group.warehouse-rg.name}"
   network_interface_ids = ["${element(azurerm_network_interface.main.*.id, count.index)}"] #["${azurerm_network_interface.main.id}"]
   vm_size               = "Standard_DS1_v2"
   count                 = "3"
