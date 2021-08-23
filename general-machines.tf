@@ -24,7 +24,7 @@ resource "azurerm_virtual_machine" "general-vms" {
   }
 
   os_profile {
-    computer_name  = "hostname"
+    computer_name  = "general-vm"
     admin_username = "testadmin"
     admin_password = "Password1234!"
   }
