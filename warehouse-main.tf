@@ -32,7 +32,6 @@ resource "azurerm_network_interface" "main" {
   name                = "${var.vm_name}-nic-${count.index}"
   location            = "${azurerm_resource_group.warehouse-rg.location}"
   resource_group_name = "${azurerm_resource_group.warehouse-rg.name}"
-  tags                = "${var.tags}"
   count               = "3"
 
   ip_configuration {
