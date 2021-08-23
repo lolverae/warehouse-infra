@@ -16,14 +16,14 @@ resource "azurerm_virtual_network" "warehouse-vnet" {
 
 resource "azurerm_subnet" "warehouse-subnet1" {
   name                 = "warehouse-subnet1"
-  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
+  virtual_network_name = "${azurerm_virtual_network.warehouse-vnet.name}"
   resource_group_name  = "${azurerm_resource_group.warehouse-rg.name}"
   address_prefix       = "10.0.0.0/24"
 }
 
 resource "azurerm_subnet" "warehouse-subnet2" {
   name                 = "warehouse-subnet2"
-  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
+  virtual_network_name = "${azurerm_virtual_network.warehouse-vnet.name}"
   resource_group_name  = "${azurerm_resource_group.warehouse-rg.name}"
   address_prefix       = "10.0.1.0/24"
 }
@@ -37,14 +37,14 @@ resource "azurerm_network_interface" "main" {
 
   ip_configuration {
     name                          = "warehouse-ip${count.index}"
-    subnet_id                     = "${azurerm_subnet.subnet1.id}"
+    subnet_id                     = "${azurerm_subnet.warehouse-subnet1.id}"
     private_ip_address_allocation = "Dynamic"
   }
 }
 
-resource "azurerm_public_ip" "warehouse-service" {
+resource "azurerm_public_ip" "warehouse-rg" {
     name                         = "warehouse IP"
     location                     = "westus2"
-    resource_group_name          = azurerm_resource_group.warehouse-service.name
+    resource_group_name          = azurerm_resource_group.warehouse-rg.name
     allocation_method            = "Static"
 }
