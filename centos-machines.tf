@@ -3,26 +3,21 @@ resource "azurerm_virtual_machine" "test" {
   location              = "${azurerm_resource_group.rg.location}"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
   network_interface_ids = ["${element(azurerm_network_interface.main.*.id, count.index)}"] #["${azurerm_network_interface.main.id}"]
-  vm_size               = "Standard_F2"
+  vm_size               = "Standard_DS1_v2"
   count                 = "3"
 
-  # This means the OS Disk will be deleted when Terraform destroys the Virtual Machine
-  # NOTE: This may not be optimal in all cases.
   delete_os_disk_on_termination = true
-
-  # This means the Data Disk Disk will be deleted when Terraform destroys the Virtual Machine
-  # NOTE: This may not be optimal in all cases.
   delete_data_disks_on_termination = true
 
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "8_2"
     version   = "latest"
   }
 
   storage_os_disk {
-    name              = "myosdisk-${count.index}"
+    name              = "warehouseosdisk-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -38,5 +33,4 @@ resource "azurerm_virtual_machine" "test" {
     disable_password_authentication = false
   }
 
-  tags = "${var.tags}"
 }
