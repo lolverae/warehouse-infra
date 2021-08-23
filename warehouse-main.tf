@@ -41,9 +41,9 @@ resource "azurerm_network_interface" "main" {
   }
 }
 
-resource "azurerm_public_ip" "warehouse-rg" {
-    name                         = "warehouse IP"
-    location                     = "westus2"
-    resource_group_name          = azurerm_resource_group.warehouse-rg.name
-    allocation_method            = "Static"
-}
+# resource "azurerm_public_ip" "warehouse-ip" {
+#     name                         = "warehouse-ip"
+#     location                     = "westus2"
+#     resource_group_name          = azurerm_resource_group.warehouse-rg.name
+#     allocation_method            = "Static"
+# }
