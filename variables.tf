@@ -1,5 +1,6 @@
 variable "resource_group_name" {
   description = "warehouse-service"
+  default = "warehouse-rg"
 }
 
 variable "vnet_name" {
