@@ -18,14 +18,14 @@ resource "azurerm_subnet" "warehouse-subnet1" {
   name                 = "warehouse-subnet1"
   virtual_network_name = "${azurerm_virtual_network.warehouse-vnet.name}"
   resource_group_name  = "${azurerm_resource_group.warehouse-rg.name}"
-  address_prefix       = "10.0.0.0/24"
+  address_prefixes     = ["10.0.0.0/24"]
 }
 
 resource "azurerm_subnet" "warehouse-subnet2" {
   name                 = "warehouse-subnet2"
   virtual_network_name = "${azurerm_virtual_network.warehouse-vnet.name}"
   resource_group_name  = "${azurerm_resource_group.warehouse-rg.name}"
-  address_prefix       = "10.0.1.0/24"
+  address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_network_interface" "main" {
