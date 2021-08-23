@@ -38,9 +38,9 @@ resource "azurerm_network_interface" "main" {
     name                          = "warehouse-ip${count.index}"
     subnet_id                     = "${azurerm_subnet.warehouse-subnet1.id}"
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = "${var.vm_name}-ip-${count.index}"
   }
 }
-
 resource "azurerm_public_ip" "wareip" {
   name                = "${var.vm_name}-ip-${count.index}"
   resource_group_name = "${azurerm_resource_group.warehouse-rg.name}"

@@ -1,5 +1,5 @@
 resource "azurerm_virtual_machine" "test" {
-  name                  = "${var.vm_name}-vm-${count.index}"
+  name                  = "${var.vm_name}-${count.index}"
   location              = "${azurerm_resource_group.warehouse-rg.location}"
   resource_group_name   = "${azurerm_resource_group.warehouse-rg.name}"
   network_interface_ids = ["${element(azurerm_network_interface.main.*.id, count.index)}"] #["${azurerm_network_interface.main.id}"]
@@ -17,7 +17,7 @@ resource "azurerm_virtual_machine" "test" {
   }
 
   storage_os_disk {
-    name              = "warehouseosdisk-${count.index}"
+    name              = "warehouse-osdisk-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
