@@ -17,7 +17,7 @@ resource "azurerm_virtual_machine" "kube-vm" {
   }
 
   storage_os_disk {
-    name              = "warehouse-osdisk-${count.index}"
+    name              = "warehouse-osdisk-2"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
